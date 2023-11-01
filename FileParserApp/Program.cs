@@ -14,11 +14,12 @@ class Program
         Console.WriteLine("Current Decimal Separator: " + customCulture.NumberFormat.CurrencyDecimalSeparator);
 
         Console.WriteLine("Введіть ім'я файлу з даними:");
-        string input = "data.txt";// Console.ReadLine();
+        string input = Console.ReadLine();
         FileParser fp = new FileParser();
         (int row, float sum) res;
         res =  fp.GetBiggestAmountOfRow(input);
-        Console.WriteLine("Максимальне значення: " + res.sum + " у рядку номер " + res.row);
+        if (res.sum == 0 && res.row == 0) Console.WriteLine($"У вказаному файлі {input} немає жодного рядка, де є тільки числа(");
+        else Console.WriteLine("Максимальне значення: " + res.sum + " у рядку номер " + res.row);
 
     }
 
