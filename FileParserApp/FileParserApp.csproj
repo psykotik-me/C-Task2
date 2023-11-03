@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="5.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\NetParserLibrary\NetParserLibrary.csproj" />
   </ItemGroup>
 
