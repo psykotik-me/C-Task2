@@ -14,7 +14,7 @@ class Program
         FileParser fp = new FileParser();
 
         ResOut res =  fp.GetBiggestAmountOfRow(input);
-        if (res.result.sum == 0 && res.result.row == 0) Console.WriteLine($"У вказаному файлі {input} немає жодного рядка, де є тільки числа(");
+        if (res.result.sum == 0 && res.result.row == 0) Console.WriteLine($"Файл {input} не існує або в ньому немає жодного рядка, де є тільки числа(");
         else //Console.WriteLine("Максимальне значення: " + res.result.sum + " у рядку номер " + res.result.row);
         {
             res.printResult();
