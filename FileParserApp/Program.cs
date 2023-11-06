@@ -14,14 +14,22 @@ class Program
         FileParser fp = new FileParser();
 
         ResOut res =  fp.GetBiggestAmountOfRow(input);
-        if (res.result.sum == 0 && res.result.row == 0) Console.WriteLine($"Файл {input} не існує або в ньому немає жодного рядка, де є тільки числа(");
+//        Console.WriteLine(res.resrow + "  " + res.ressum+"  "+ res.resrow.Equals(-1));
+
+        if (res.resrow == 0 && res.ressum.Equals(-1.0f)) Console.WriteLine($"Файл {input} не знайдено!");
+        else if (res.resrow == 0 && res.ressum.Equals(0)) Console.WriteLine($"У файлі {input} немає жодного рядка, де є тільки числа(");
         else //Console.WriteLine("Максимальне значення: " + res.result.sum + " у рядку номер " + res.result.row);
         {
-            res.printResult();
+           Console.WriteLine(res.printResult());
             Console.WriteLine("Введіть '1' щоб побачити неправильні рядки:");
-            if (Console.ReadLine().Equals("1"))   res.printBadRows();
+            if (Console.ReadLine().Equals("1")) 
+                foreach (var pair in res.getBadRows())
+                {
+                    Console.WriteLine($"Номер рядка: {pair.Key}, рядок: {pair.Value}");
+                }
         }
 
+   
     }
 
 

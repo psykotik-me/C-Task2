@@ -1,68 +1,14 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
 using System.Xml.Linq;
+using NetParserLibrary;
 using NLog;
+
 
 namespace NetParserLibrary
 {
 
-    public class ResOut
-    {
-        private Dictionary<int, float> digitsdict = new ();
-        private Dictionary<int, string> stringsdict = new ();
-        public (int row, float sum) result;
-
-        public Dictionary<int, string> Stringsdict
-        {
-            get { return stringsdict; }  
-        }
-
-        public Dictionary<int, float> Digitsdict
-        {
-            get { return digitsdict; }
-        }
-
-        public void AddToStringsDict(int rownum, string s)
-        {
-            stringsdict.Add(rownum, s);
-        }
-
-        public void AddToDigitsDict(int rownum, float s)
-        {
-            digitsdict.Add(rownum, s);
-        }
-
-        public void printResult()
-        {
-            Console.WriteLine("Максимальне значення: " + result.sum + " у рядку номер " + result.row);
-        }
-
-        public void printBadRows()
-        {
-
-            if (stringsdict.Count > 0)
-            {
-                Console.WriteLine("Неправильні рядки(містять інші символи крім чисел):"); 
-                foreach (var pair in stringsdict)
-                {
-                    Console.WriteLine($"Номер рядка: {pair.Key}, рядок: {pair.Value}");
-                }
-            }
-            else Console.WriteLine("У вказаному файлі всі рядки правильні");
-        }
-        public void printDigitsRows()
-        {
-            if (digitsdict.Count > 0)
-            {
-                Console.WriteLine("Правильні рядки(містять тільки числа, розділені комами):");
-                foreach (var pair in digitsdict)
-                {
-                    Console.WriteLine($"Номер рядка: {pair.Key}, рядок: {pair.Value}");
-                }
-            }
-            else Console.WriteLine("У вказаному файлі немає жодного правильного рядка");
-        }
-    }
+  
 
     public class FileParser
     {
@@ -133,8 +79,10 @@ namespace NetParserLibrary
                 if (lines != null) AnalyseLines(lines, res);
                 else
                 {
-                    res.result = (0, -1);
+                    res.resrow = 0;
+                    res.ressum = -1.0f ;     // якщо файл пустий або не існує то повертаємо row=0, sum=-1
                     Logger.Error($"File {filename} not found!");
+                    return res;
 
                 }
 
@@ -143,9 +91,14 @@ namespace NetParserLibrary
                 {
                     float maxValue = res.Digitsdict.Max(x => x.Value);
                     int key = res.Digitsdict.FirstOrDefault(pair => pair.Value == maxValue).Key;
-                    res.result = (key, maxValue);
+                    res.resrow = key;
+                    res.ressum = maxValue;
                 }
-                else res.result = (0, 0);
+                else
+                {
+                    res.resrow = 0;
+                    res.ressum = 0;
+                }
                 return res;
             }
 
