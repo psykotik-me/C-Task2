@@ -18,9 +18,9 @@ class Program
 
         if (res.resrow == 0 && res.ressum.Equals(-1.0f)) Console.WriteLine($"Файл {input} не знайдено!");
         else if (res.resrow == 0 && res.ressum.Equals(0)) Console.WriteLine($"У файлі {input} немає жодного рядка, де є тільки числа(");
-        else //Console.WriteLine("Максимальне значення: " + res.result.sum + " у рядку номер " + res.result.row);
+        else 
         {
-           Console.WriteLine(res.printResult());
+            Console.WriteLine(res.printResult());
             Console.WriteLine("Введіть '1' щоб побачити неправильні рядки:");
             if (Console.ReadLine().Equals("1")) 
                 foreach (var pair in res.getBadRows())
